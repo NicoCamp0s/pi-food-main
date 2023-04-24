@@ -49,27 +49,6 @@ getRouter.get("/", async (req, res) => {
   
       return res.status(200).json(allRecipes);
     }
-}) 
-  
-    //     const { name } = req.query;
+})   
 
-    //     if (!name || !name.trim()) {
-    //       return res.status(400).send({ message: "Ingresar un nombre valido" });
-    //     }
-      
-    //     const ApiRecipes = await allApiByQuery(name);
-    //     console.log(ApiRecipes);
-    //     const DBRecipes = await allDbByQuery(name);
-    //     console.log(DBRecipes);
-    //     const allRecipes = [];
-      
-    //     if (Array.isArray(ApiRecipes)) {
-    //       ApiRecipes.forEach(recipe => createDiet(recipe.dietTypes));
-    //       allRecipes.push(...ApiRecipes);
-    //     }
-      
-    //     allRecipes.push(...DBRecipes);
-      
-    //     return allRecipes.length ? res.status(200).json(allRecipes.flat()) : res.status(404).json({ message: "No se encontraron recetas" });
-      
-    module.exports = getRouter
+module.exports = getRouter

@@ -4,8 +4,13 @@ const { getDiets } = require("../controllers/Diets");
 
 
 getRouter.get('/', async (req, res)=>{
-    const diets = await getDiets()
-    return res.json({diets})
-})
+    try {
+        const diets = await getDiets();
+        res.status(200).json(diets);
+      } catch (error) {
+        console.log(error);
+        res.status(500).send('Server Error');
+      }
+    });
 
 module.exports = getRouter;

@@ -15,9 +15,7 @@ postRouter.post("/", async (req, res, next) => {
                 steps, 
                 image, 
                 dietTypes, 
-                score, 
                 healthScore, 
-                time,
                 dishTypes
             })
             createDiet(dietTypes);

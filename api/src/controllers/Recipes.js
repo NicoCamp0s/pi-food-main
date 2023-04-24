@@ -4,7 +4,6 @@ const { Op } = require("sequelize");
 const { API_KEY } = process.env;
 const axios = require("axios");
 
-
 //* Solicito la informacion 
 const allApiByQuery = async (query) => {
     try {
@@ -17,8 +16,7 @@ const allApiByQuery = async (query) => {
                         name: rec.title,
                         image: rec.image,
                         dietTypes: rec.diets.map(d => {return {name: d}}),
-                        summary: rec.summary,
-                        score: rec.spoonacularScore, 
+                        summary: rec.summary, 
                         healthScore: rec.healthScore,
                         steps: rec.analyzedInstructions,
                         time: rec.readyInMinutes,
@@ -47,7 +45,6 @@ const getApiById = async (id) => {
           image: data.image,
           summary: data.summary,
           dietTypes: data.diets,
-          score: data.spoonacularScore,
           healthScore: data.healthScore,
           dishTypes: data.dishTypes,
           //? solamente traigo los pasos a seguir del metodo de realizado

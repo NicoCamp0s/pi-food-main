@@ -25,7 +25,7 @@ const addDb = () => {
     })
 }
 
-const createDiet = () => {
+const createDiet = (Diets) => {
     if(Diets) {
         Diets.forEach(d => {
             Diets.findOrCrate({
