@@ -1,0 +1,50 @@
+.selectContainer{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px;
+}
+
+.createButton{
+    padding: 5px;
+    margin: 5px;
+    width: 100px;
+    font-size: large;
+    border-radius: 5px;
+    border: 2px solid #55868C;
+    background-color: transparent;
+    color: #55868C;
+    text-decoration: none;
+    cursor: pointer;
+    transition-duration: 0.4s;
+}
+
+.createButton:hover{
+    background-color: #4dfd59;
+    color: white;
+    border: 2px solid #4dfd59
+}
+
+.filters{
+    background: transparent;
+    margin: 5px 5px;
+    padding: 5px 5px;
+    font-size: large;
+    color: #5f5e99;
+    border: 1px solid #5f5e99;
+    border-radius: 5px;
+}
+
+option{
+    color: black;
+}
+
+.cardsGrid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .Card {
+    width: calc(33.33% - 10px);
+    margin-bottom: 20px;
+  }

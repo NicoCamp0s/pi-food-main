@@ -8,6 +8,7 @@ import { validate } from "../../Helpers/Validation";
 const Forms = () => {
     const dispatch = useDispatch();
     const diets = useSelector(state => state.diets);
+    console.log(diets);
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
@@ -35,10 +36,10 @@ const Forms = () => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        if (Object.values(errors).length > 0) alert("Por favor rellenar todos los campos")
+        if (Object.values(errors).length > 0) alert("Please fill in all fields")
         else {
             dispatch(act.createrRecipe(rec))
-            alert('¡Receta creada con éxito!')
+            alert("Recipe created successfully!")
         }
     };
 
@@ -85,35 +86,35 @@ const Forms = () => {
                     <h1>Creacion de receta</h1>
                     <form onSubmit={e => handleSubmit(e)}>
                         <div>
-                            <label>Nombre</label>
+                            <label>Name</label>
                             <input type="text" value={rec.name} name='name' onChange={e => handleInputChange(e)} />
                             {errors.name && (
                                 <p>{errors.name}</p>
                             )}
                         </div>
                         <div>
-                            <label>Resumen</label>
+                            <label>Summary</label>
                             <textarea value={rec.summary} name='summary' onChange={e => handleInputChange(e)} />
                             {errors.summary && (
                                 <p>{errors.summary}</p>
                             )}
                         </div>
                         <div>
-                            <label>Nivel Saludable</label>
+                            <label>health Score</label>
                             <input type="number" min="0" max='100' value={rec.healthScore} name='healthScore' onChange={e => handleInputChange(e)} />
                             {errors.healthScore && (
                                 <p>{errors.healthScore}</p>
                             )}
                         </div>
                         <div>
-                            <label>Imagen</label>
+                            <label>Image</label>
                             <input type="text" value={rec.image} name='image' onChange={e => handleInputChange(e)} />
                             {errors.image && (
                                 <p>{errors.image}</p>
                             )}
                         </div>
                         <div>
-                            <label>Pasos</label>
+                            <label>Steps</label>
                             <textarea value={rec.steps} name='steps' onChange={e => handleSteps(e)} />
                             {errors.steps && (
                                 <p>{errors.steps}</p>
@@ -122,10 +123,10 @@ const Forms = () => {
                         <div>
                             <select onChange={e => handleSelectDiets(e)} defaultValue='default'
                             className={css.dietSelect}>
-                                <option value="default" disabled className={css.dietOption}>Elegir dietas</option>
+                                <option value="default" disabled className={css.dietOption}>Select type of diet</option>
                                 {
                                     diets && diets.map(d => (
-                                        <option value={d.name} key={d.id} className={css.dietOption}>{d.name}</option>
+                                        <option value={d} key={d} className={css.dietOption}>{d}</option>
                                     ))
                                 }
                             </select>
@@ -133,17 +134,17 @@ const Forms = () => {
                                 <p style={{ float: 'right' }}>{errors.diets}</p>
                             )}
                             {rec.diets.map(d =>
-                                <div key={d.id} className={css.divdiets}>
+                                <div key={d} className={css.divdiets}>
                                     <p className={css.selecteddiets}>{d}</p>
                                     <button onClick={() => handleDietDelete(d)}
                                     className={css.buttonclose}>X</button>
                                 </div>
                             )}
                         </div>
-                        <button type='submit' className={css.createButton}>Crear</button>
+                        <button type='submit' className={css.createButton}>Create</button>
                     </form>
                     <Link to='/home'>
-                        <button className={css.createButton}>Volver</button>
+                        <button className={css.createButton}>Back</button>
                     </Link>
                 </div>
             </div>
