@@ -1,43 +1,80 @@
 const { Sequelize } = require("sequelize");
 const { Recipe, Diets } = require("../db");
 const { Op } = require("sequelize");
-const { API_KEY } = process.env;
+const { API_KEY, API_KEY2, API_KEY3 } = process.env;
 const axios = require("axios");
+const DATA = require("../../../client/data.json");
 
 //* Solicito la informacion 
+const allApiData = async function(){
+   try {
+        const apiUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY3}&number=20&addRecipeInformation=true`);
+        const data =  await apiUrl.data.results.map(rec => {
+           return {
+            id: rec.id,
+            name: rec.title,
+            summary: rec.summary,
+            dietTypes: rec.diets,//.map( d => { return { name: d}}),
+            healthScore: rec.healthScore,
+            image: rec.image,
+            dishTypes: rec.dishTypes.map(d => {return {name: d}}),
+            steps: rec.analyzedInstructions[0]?.steps.map((s) => { return s.step; })
+        }
+    })
+    return data;
+    
+    // const data = {...DATA, results: DATA.results.map(rec =>{
+    //     return {
+    //         id: rec.id,
+    //         name: rec.title,
+    //         summary: rec.summary,
+    //         dietTypes: rec.diets.map( d => { return { name: d}}),
+    //         healthScore: rec.healthScore,
+    //         image: rec.image,
+    //         dishTypes: rec.dishTypes.map(d => {return {name: d}}),
+    //         steps: rec.analyzedInstructions[0]?.steps.map(s => {
+    //             return `<b>${s.number}</b> ${s.step}<br>`
+    //         })
+    //     }
+    // })}
+    // return data;
+   } catch (error) {
+    return error.message;
+   }
+}
+
 const allApiByQuery = async (query) => {
     try {
-        const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100&query=${query}`);
+        const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY3}&addRecipeInformation=true&number=20&query=${query}`);
         const data = response.data;
-        console.log(data);
-        if(data.hasOwnProperty("totalResults") && data.totalResults) {
+        // const data = {...DATA, results: DATA.results.filter(data => data.title.toLowerCase().includes(query))} 
+        //console.log(data);
+        if(data.totalResults) {
             const rec = data.results.map(rec => ({
                         id: rec.id,
                         name: rec.title,
                         image: rec.image,
-                        dietTypes: rec.diets.map(d => {return {name: d}}),
-                        summary: rec.summary, 
+                        dietTypes: rec.diets,//.map(d => {return {name: d}}),
+                        summary: rec.summary,
                         healthScore: rec.healthScore,
                         steps: rec.analyzedInstructions,
-                        time: rec.readyInMinutes,
                         dishTypes: rec.dishTypes.map(d => {return {name: d}})
                 }))
                 return rec;
             } else {
-                return [];
+               return [];
             }
     } catch (error) {
         console.log(error);
-        return "Error, no se pudo encontrar la receta solicitada"
+        return "Error, the requested recipe could not be found"
     }
 }
 
 const getApiById = async (id) => {
     try {
-        const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=${API_KEY}`);
+        const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=${API_KEY3}`);
         const data = response.data;
-
-        //! La propiedad code se refiere al codigo de estado HTTP devuelto por la API
+        // //! La propiedad code se refiere al codigo de estado HTTP devuelto por la API
         if(data.code) return false;
         return {
           id: data.id,
@@ -48,12 +85,10 @@ const getApiById = async (id) => {
           healthScore: data.healthScore,
           dishTypes: data.dishTypes,
           //? solamente traigo los pasos a seguir del metodo de realizado
-          steps: data.analyzedInstructions[0]?.steps.map((s) => { return s.step; }),
-          //! REVISAR POR AGREGAR ALGO
-        //   ingredients: data.analyzedInstructions[0]?.ingredients.map((i) => { return i.name})
+          steps: data.analyzedInstructions[0]?.steps.map((s) => { return s.step; })
         }
     } catch (err) {
-        return "Error, no se puedo encontrar el id solicitado";
+        return "Error, the requested id could not be found";
     }
 }
 
@@ -63,12 +98,13 @@ const allDbByQuery = async (query) => {
             name: {[Op.iLike]: `${query}`}
         }
     })
-    return recipes !== null && recipes !== undefined ? recipes : false;
+    // recipes.length ? recipes : [];
+    return recipes;
 }
 
 const getDbByid = async(id) => {
     const recipes = await Recipe.findByPk(id);
-    return recipes !== null && recipes !== undefined ? recipes : false;
+    return recipes;
 }
 
 const getAllDb = async() => {
@@ -82,7 +118,7 @@ const getAllDb = async() => {
        }
     })
     // return rec !== null && rec !== undefined ? rec : false;
-    recipes.length ? recipes : false;
+    return recipes;
 }
 
 module.exports = {
@@ -90,5 +126,6 @@ module.exports = {
     getApiById,
     allDbByQuery,
     getDbByid,
-    getAllDb
+    getAllDb,
+    allApiData
 }

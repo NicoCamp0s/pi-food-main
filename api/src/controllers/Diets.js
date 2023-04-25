@@ -13,29 +13,29 @@ const DB_Diets = [
     "Primal",
     "Low_FODMAP",
     "Whole30"
-]
+];
 
-const addDb = () => {
-    DB_Diets.forEach(diet => {
-        Diets.findOrCrate({
+const addDb = async () => {
+    await Promise.all(DB_Diets.map(diet => {
+        return Diets.findOrCreate({
             where: {
                 name: diet, 
             }
-        })
-    })
-}
+        });
+    }));
+};
 
-const createDiet = (Diets) => {
-    if(Diets) {
-        Diets.forEach(d => {
-            Diets.findOrCrate({
+const createDiet = async (dietNames) => {
+    if (dietNames) {
+        await Promise.all(dietNames.map(d => {
+            return Diets.findOrCreate({
                 where: {
                     name: d,
                 }
-            })
-        })
+            });
+        }));
     }
-}
+};
 
 const getDiets = async () => {
     const diets = await Diets.findAll();
