@@ -4,12 +4,19 @@ const inicialState = {
     recipes: [],
     diets: [],
     createRecipe: [],
-    recipeDetail: [],
+    recipeDetail: []
 }
 
 const reducer = (state = inicialState, action) => {
     switch(action.type) {
+        
         //!agregar el case  POST
+        case act.CREATE_RECIPE:
+            return {
+                ...state,
+                createRecipe: action.payload,
+                recipes: action.payload
+            }
 
         case act.GET_RECIPES:
             return {
@@ -18,6 +25,7 @@ const reducer = (state = inicialState, action) => {
             }
 
         case act.GET_RECIPES_NAME:
+            console.log( action.payload);
             return {
                 ...state,
                 recipes: action.payload
@@ -48,20 +56,16 @@ const reducer = (state = inicialState, action) => {
             }
 
         case act.FILTER_BY_DIETS:
-            const recipes = state.recipes
-            console.log(recipes);
-            console.log(recipes[0].dietTypes);
-            console.log(action.payload);
             const recipesWithDiet = action.payload === 'all' 
-            ? recipes 
-            : recipes.map(rec => {
-                let filterDiet = rec.dietTypes.map(d => d)
-                if (filterDiet.includes(action.payload)) return rec
-            })
-            return {
-                ...state,
-                recipes: recipesWithDiet
-            }
+            //console.log(action.payload);
+            // recipes.dietTypes.filter(r => {
+            //     let names = r.diets.map(d => d.name)
+            //     if (names.includes(action.payload)) return r
+            // })
+        return {
+            ...state,
+            recipes: recipesWithDiet
+        }
 
         case act.ORDER_BY_NAME:
             const recipesSorted = action.payload === 'asc' ?

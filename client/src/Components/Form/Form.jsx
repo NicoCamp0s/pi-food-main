@@ -8,7 +8,7 @@ import { validate } from "../../Helpers/Validation";
 const Forms = () => {
     const dispatch = useDispatch();
     const diets = useSelector(state => state.diets);
-    console.log(diets);
+    // console.log(diets);
     const [errors, setErrors] = useState({});
 
     useEffect(() => {

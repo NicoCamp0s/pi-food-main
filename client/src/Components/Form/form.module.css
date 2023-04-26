@@ -1,4 +1,4 @@
- /* .container{
+  .container{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -6,7 +6,7 @@
     height: 100vh;
     margin: 1rem;
     padding: 1rem;
-}  */
+}  
 /* .bkg{
     background-image: url('../assets/fondooscuroasd.jpg');
     background-size: cover;
@@ -137,7 +137,7 @@ textarea:focus ~ p, input:focus ~p, select:focus ~p{
     font-size: large;
     padding: 10px;
     color: blanchedalmond;
-}
+} 
 .buttonclose{
     margin: 4px;
     border-radius: 1rem;
@@ -145,3 +145,4 @@ textarea:focus ~ p, input:focus ~p, select:focus ~p{
     border: 1px rgb(212, 79, 79);
     color: rgb(212, 79, 79);
 }  */
+

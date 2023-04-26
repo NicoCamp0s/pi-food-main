@@ -1,4 +1,5 @@
 .detail {
+  font-family: 'Cormorant Garamond', serif;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,17 +11,22 @@
     margin: 1rem 0;
   }
   
-  .detail h3 {
+  .summary  {
     font-size: 1.5rem;
     margin: 1rem 0;
+    cursor: pointer;
+  
   }
   
-  .detail img {
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-    margin: 1rem 0;
-  }
+  .imgContainer{
+    float: left;
+    margin: 12px;
+    padding: 20px;
+}
+
+.img{
+    border-radius: 10px;
+}
   
   .detail p {
     font-size: 1.2rem;

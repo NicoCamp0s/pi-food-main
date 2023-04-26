@@ -12,12 +12,6 @@ const HomePage = () => {
     const dispatch = useDispatch();
     const rec = useSelector(state => state.recipes); //! lo mismo que pasa en detail
     const diets = useSelector(state => state.diets);
-    const [home, setHome] = useState(true)
-    const [currentPage, setCurrentPage] = useState(1); // pagina que ira cambiando
-    const [recipesPerPage, setRecipesPerPage] = useState(9); 
-    const lastRecipe = recipesPerPage * currentPage; //9     // indice ultima receta renderizada
-    const firstRecipe = lastRecipe - recipesPerPage; //0         // indice primera receta renderizada
-    const currentRecipes = rec?.slice(firstRecipe, lastRecipe);// las 9 recetas que se iran mostrando en cda pág
     
     useEffect(() => {
         dispatch(act.getRecipes());
@@ -27,10 +21,20 @@ const HomePage = () => {
         dispatch(act.getDiets());
     }, [dispatch])
 
-    ;
+    // console.log(diets);
+
+    const [home, setHome] = useState(true) 
+    const [currentPage, setCurrentPage] = useState(1); // pagina que ira cambiando
+    const [recipesPerPage, setRecipesPerPage] = useState(9); 
+    const lastRecipe = recipesPerPage * currentPage; //9     // indice ultima receta renderizada... 
+    const firstRecipe = lastRecipe - recipesPerPage; //0         // indice primera receta renderizada...
+    const currentRecipes = rec?.slice(firstRecipe, lastRecipe); // las 9 recetas que se iran mostrando en cda pág
+
+    //console.log(rec);
 
     const paginate = (number) => {
         setCurrentPage(number)
+        window.scrollTo(0, 0);
     };
 
     const handleFilterByDiets = (e) => {
@@ -51,7 +55,7 @@ const HomePage = () => {
         setCurrentPage(1)
     };
 
-    console.log(currentRecipes);
+    // console.log(currentRecipes);
 
     return (
         !rec ?
@@ -93,6 +97,7 @@ const HomePage = () => {
                 </div>
                 <br />
                 <Paginate
+                    onClick= {() => window.scrollTo(0, 0)}
                     recipesPerPage={recipesPerPage}
                     recipes={rec?.length}
                     paginate={paginate}

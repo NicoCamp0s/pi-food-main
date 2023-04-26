@@ -18,7 +18,7 @@ const Detail = () => {
     }
   }, [id])
   
-  console.log(recipeDetail);
+  // console.log(recipeDetail);
 
   const handleBack = () => {
     navigate("/home")
@@ -34,7 +34,7 @@ const Detail = () => {
           <h2>Id: {recipeDetail.id}</h2>
           <h3 className={css.title}>titulo: {recipeDetail.name}</h3>
           <img src={recipeDetail.image} alt="img" />
-          <h3 dangerouslySetInnerHTML={{__html: recipeDetail.summary}}></h3>
+          <h3 className={css.summary} dangerouslySetInnerHTML={{__html: recipeDetail.summary}}></h3>
           <h3>Puntos de salud: {recipeDetail.healthScore}</h3>
           <h3>Tipo de dieta: {recipeDetail.dietTypes.join(", ")}</h3>
           <h3>tipos de platos: {recipeDetail.dishTypes.join(", ")}</h3> 

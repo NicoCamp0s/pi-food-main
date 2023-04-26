@@ -1,5 +1,9 @@
+body {
+  background-image: url("https://fondosmil.com/fondo/56631.jpg");
+}
+
 .App {
-  text-align: center;
+   text-align: center; 
 }
 
 .App-logo {

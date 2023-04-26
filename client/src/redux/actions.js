@@ -41,15 +41,20 @@ export const getRecipes = () => {
 export const searchByName = (query) => {
     return async function(dispatch) {
       const response = await axios.get(`http://localhost:3001/recipes?query=${query}`);
+      const byName = response.data.filter(rec => {
+        if (rec.name.toLowerCase().includes(query.toLowerCase())) {
+            return rec
+        } 
+      })
       dispatch({
         type: GET_RECIPES_NAME,
-        payload: response.data
+        payload: byName
       });
     };
   };
   
 
-export const createrRecipe = ({name, summary, steps, image, dietTypes, healthScore, dishTypes}) => {
+export const createrRecipe = ({name, summary, steps, image, dietTypes, healthScore}) => {
     return async function(dispatch) {
         const post = await axios.get(`http://localhost:3001/recipe`, {
             name, 
@@ -58,7 +63,6 @@ export const createrRecipe = ({name, summary, steps, image, dietTypes, healthSco
             image, 
             dietTypes, 
             healthScore, 
-            dishTypes
         });
         dispatch({
             type: CREATE_RECIPE,

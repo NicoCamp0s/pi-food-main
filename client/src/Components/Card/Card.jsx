@@ -5,15 +5,13 @@ import { Link } from "react-router-dom";
 const Card = (props) => {
 
     const { name, img, diet, id } = props;
-    // console.log(diet);
-    // console.log(props);
-    // console.log(name);
+
     return (
         <div className={css.cardContainer}>
-            <div className={`${css.card} ${css.uClearfix}`}>
+            <div className={`${css.card}`}>
                 <div className={css.cardBody}>
                     <h2 className={css.cardTitle}>{name}</h2>
-                    { <ul className={`${css.cardDescription} ${css.subtle}`}>{diet.map(d => <li key={d}>{d}</li>)}</ul> }
+                    { <ul className={`${css.cardDescription}`}>{diet.map(d => <li key={d}>{d}</li>)}</ul> }
                     <div>
                         <Link to={`/recipes/${id}`} className={css.cardRead}>See recipe details</Link>
                     </div>

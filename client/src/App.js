@@ -7,12 +7,9 @@ import Form from './Components/Form/Form';
 
 function App() {
 
-  const { pathname } =useLocation()
-  
   return (
     
     <div className="App">
-      {pathname === "/" && <h1>Henry Food</h1>}
       <Routes>
         <Route path="/" element={<LandingPage/>}/>
         <Route path="/home" element={<HomePage/>}/>
