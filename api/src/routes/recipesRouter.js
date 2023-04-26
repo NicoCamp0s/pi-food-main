@@ -40,16 +40,12 @@ getRouter.get("/", async (req, res) => {
     const { name } = req.query;
       try {
             // compruebo si name es nulo o vaci
-    if(!name) {
-      const data = await cts.allApiData()
-      return res.status(200).json(data);
-    } else {
+    if(name) {
       // obtengo las recetas de la api y de la base de datos
       const [apiRecipes, dbRecipes] = await Promise.all([
         cts.allApiByQuery(name),
         cts.allDbByQuery(name),
       ]);
-
       // lo concateno
       const allRecipes = apiRecipes.concat(dbRecipes);
       console.log(allRecipes);
@@ -57,6 +53,9 @@ getRouter.get("/", async (req, res) => {
       if (allRecipes.length === 0) {
         return res.status(404).json({ message: 'recipe not found' });
       } else return res.status(200).json(allRecipes);
+    } else {
+      const data = await cts.allApiData()
+      return res.status(200).json(data);
     }
       } catch (error) {
         console.error(error);

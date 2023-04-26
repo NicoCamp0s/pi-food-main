@@ -8,13 +8,13 @@ const DATA = require("../../../client/data.json");
 //* Solicito la informacion 
 const allApiData = async function(){
    try {
-        const apiUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY3}&number=20&addRecipeInformation=true`);
+        const apiUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=30&addRecipeInformation=true`);
         const data =  await apiUrl.data.results.map(rec => {
            return {
             id: rec.id,
             name: rec.title,
             summary: rec.summary,
-            dietTypes: rec.diets,//.map( d => { return { name: d}}),
+            dietTypes: rec.diets,
             healthScore: rec.healthScore,
             image: rec.image,
             dishTypes: rec.dishTypes.map(d => {return {name: d}}),
@@ -45,7 +45,7 @@ const allApiData = async function(){
 
 const allApiByQuery = async (query) => {
     try {
-        const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY3}&addRecipeInformation=true&number=20&query=${query}`);
+        const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=30&query=${query}`);
         const data = response.data;
         // const data = {...DATA, results: DATA.results.filter(data => data.title.toLowerCase().includes(query))} 
         //console.log(data);
@@ -54,7 +54,7 @@ const allApiByQuery = async (query) => {
                         id: rec.id,
                         name: rec.title,
                         image: rec.image,
-                        dietTypes: rec.diets,//.map(d => {return {name: d}}),
+                        dietTypes: rec.diets,
                         summary: rec.summary,
                         healthScore: rec.healthScore,
                         steps: rec.analyzedInstructions,
@@ -72,7 +72,7 @@ const allApiByQuery = async (query) => {
 
 const getApiById = async (id) => {
     try {
-        const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=${API_KEY3}`);
+        const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?includeNutrition=true&apiKey=${API_KEY}`);
         const data = response.data;
         // //! La propiedad code se refiere al codigo de estado HTTP devuelto por la API
         if(data.code) return false;

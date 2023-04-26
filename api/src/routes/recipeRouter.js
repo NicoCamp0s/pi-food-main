@@ -6,7 +6,7 @@ postRouter.post("/", async (req, res, next) => {
     try {
         const { name, summary, steps, image, dietTypes, healthScore, dishTypes } = req.body;
         
-        if(!name || !summary || !steps) {
+        if(!name || !summary || !steps || !dietTypes) {
             return res.status(400).send("Porfavor, indique name, summaty y steps para continuar")
         } else {
             const createRecipe = await Recipe.create({
@@ -15,10 +15,8 @@ postRouter.post("/", async (req, res, next) => {
                 steps, 
                 image, 
                 dietTypes, 
-                healthScore, 
-                dishTypes
+                healthScore
             })
-            
             createDiet(dietTypes);
             return res.status(200).json({createRecipe});
         }
